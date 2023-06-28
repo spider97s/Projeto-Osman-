@@ -87,7 +87,7 @@ void todosProdutos()
     for (int i = 0; i < numProdutos; i++)
     {
         printf("Produto %d:\n", i + 1);
-        printf("Descrição: %s", produtos[i].descricao);
+        printf("Descricao: %s", produtos[i].descricao);
         printf("Peso: %.2f\n", produtos[i].peso);
         printf("Valor de compra: %.2f\n", produtos[i].valorCompra);
         printf("Valor de venda: %.2f\n", produtos[i].valorVenda);
@@ -108,7 +108,7 @@ void produtosEstados()
     printf("Produtos do estado %s:\n", uf);
     for (int i = 0; i < numProdutos; i++)
     {
-        if (strcmp(produtos[i].fabricante, uf) == 0)
+        if (strcmp(marcas[i].uf, uf) == 0)
         {
             printf("Produto %d:\n", i + 1);
             printf("Descricao: %s", produtos[i].descricao);
@@ -135,7 +135,7 @@ void listaProdutosMarca()
         if (strcmp(produtos[i].fabricante, marca) == 0)
         {
             printf("Produto %d:\n", i + 1);
-            printf("Descrição: %s", produtos[i].descricao);
+            printf("Descricao: %s", produtos[i].descricao);
             printf("Peso: %.2f\n", produtos[i].peso);
             printf("Valor de compra: %.2f\n", produtos[i].valorCompra);
             printf("Valor de venda: %.2f\n", produtos[i].valorVenda);
@@ -146,59 +146,53 @@ void listaProdutosMarca()
         }
     }
 }
-void produtoMaisCaro()
-{ // Produto mais caro
+void estadoProdutoMaisCaro()
+{
+    printf("\n\n\n");
     float maiorValor = produtos[0].valorVenda;
-    char ufMaisCaros[5][3];
-    int numEstados = 0;
 
     for (int i = 1; i < numProdutos; i++)
     {
         if (produtos[i].valorVenda > maiorValor)
         {
             maiorValor = produtos[i].valorVenda;
-            numEstados = 0;
-            strcpy(ufMaisCaros[numEstados], produtos[i].fabricante);
-        }
-        else if (produtos[i].valorVenda == maiorValor)
-        {
-            numEstados++;
-            strcpy(ufMaisCaros[numEstados], produtos[i].fabricante);
         }
     }
-    printf("\n\n\n");
-    printf("Estado(s) onde está registrado o produto mais caro:\n");
-    for (int i = 0; i <= numEstados; i++)
+
+    printf("Estado(s) com o produto mais caro:\n");
+    for (int i = 0; i < numProdutos; i++)
     {
-        printf("%s\n", ufMaisCaros[i]);
+        if (produtos[i].valorVenda == maiorValor)
+        {
+            for (int j = 0; j < numMarcas; j++)
+            {
+                if (strcmp(marcas[j].marca, produtos[i].fabricante) == 0)
+                {
+                    printf("%s\n", marcas[j].uf);
+                    break; // Sai do loop interno quando encontra o estado correspondente
+                }
+            }
+        }
     }
 }
 void produtoMaisBarato()
-{ // Produto mais barato
+{
     float menorValor = produtos[0].valorVenda;
-    char fabricantesMaisBaratos[5][50];
-    int numFabricantes = 0;
+    int indexMenorValor = 0;
 
     for (int i = 1; i < numProdutos; i++)
     {
         if (produtos[i].valorVenda < menorValor)
         {
             menorValor = produtos[i].valorVenda;
-            numFabricantes = 0;
-            strcpy(fabricantesMaisBaratos[numFabricantes], produtos[i].fabricante);
-        }
-        else if (produtos[i].valorVenda == menorValor)
-        {
-            numFabricantes++;
-            strcpy(fabricantesMaisBaratos[numFabricantes], produtos[i].fabricante);
+            indexMenorValor = i;
         }
     }
+
     printf("\n\n\n");
-    printf("Fabricante(s) onde está registrado o produto mais barato:\n");
-    for (int i = 0; i <= numFabricantes; i++)
-    {
-        printf("%s\n", fabricantesMaisBaratos[i]);
-    }
+    printf("Fabricante do produto mais barato:\n");
+    printf("Fabricante: %s", produtos[indexMenorValor].fabricante);
+    printf("-------------------\n");
 }
 void ordemPorValor()
 { // ordem por valor
@@ -248,7 +242,7 @@ void ordemPorLucro()
     for (int i = 0; i < numProdutos; i++)
     {
         printf("Produto %d:\n", i + 1);
-        printf("Descrição: %s", produtos[i].descricao);
+        printf("Descricao: %s", produtos[i].descricao);
         printf("Peso: %.2f\n", produtos[i].peso);
         printf("Valor de compra: %.2f\n", produtos[i].valorCompra);
         printf("Valor de venda: %.2f\n", produtos[i].valorVenda);
@@ -303,7 +297,7 @@ int main()
             listaProdutosMarca();
             break;
         case 7:
-            produtoMaisCaro();
+            estadoProdutoMaisCaro();
             break;
         case 8:
             produtoMaisBarato();
