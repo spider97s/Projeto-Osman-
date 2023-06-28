@@ -159,7 +159,7 @@ void estadoProdutoMaisCaro()
         }
     }
 
-    printf("Estado(s) com o produto mais caro:\n");
+    printf("Estado com o produto mais caro:\n");
     for (int i = 0; i < numProdutos; i++)
     {
         if (produtos[i].valorVenda == maiorValor)
@@ -169,7 +169,7 @@ void estadoProdutoMaisCaro()
                 if (strcmp(marcas[j].marca, produtos[i].fabricante) == 0)
                 {
                     printf("%s\n", marcas[j].uf);
-                    break; // Sai do loop interno quando encontra o estado correspondente
+                    break;
                 }
             }
         }
@@ -213,7 +213,7 @@ void ordemPorValor()
     for (int i = 0; i < numProdutos; i++)
     {
         printf("Produto %d:\n", i + 1);
-        printf("Descrição: %s", produtos[i].descricao);
+        printf("Descricao: %s", produtos[i].descricao);
         printf("Peso: %.2f\n", produtos[i].peso);
         printf("Valor de compra: %.2f\n", produtos[i].valorCompra);
         printf("Valor de venda: %.2f\n", produtos[i].valorVenda);
